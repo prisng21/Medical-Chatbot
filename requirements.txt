@@ -1,8 +1,9 @@
-# NOTE: torch is intentionally NOT listed here. The Render build command
-# installs the CPU-only wheel (torch==2.13.0+cpu) from the PyTorch index
-# to keep the build small; the CUDA bundle on PyPI is ~2.5 GB.
-# For local dev, install torch separately (see README).
+# torch comes from the PyTorch CPU index: the plain "torch" on PyPI bundles
+# CUDA (~2.5 GB); the +cpu wheel is ~200 MB and all we need. Pinning the
+# +cpu local version forces pip to pick it from the extra index.
+--extra-index-url https://download.pytorch.org/whl/cpu
 Flask==3.1.3
+torch==2.13.0+cpu
 nltk==3.10.3
 numpy==2.5.2
 pandas==3.0.5
