@@ -1,0 +1,17 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Logs
+*.log
+
+# Local database (recreated on startup)
+chat_history.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Windows copy artifact
+nnet.py (2)

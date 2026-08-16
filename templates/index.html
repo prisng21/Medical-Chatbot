@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+      integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script type="text/javascript">
+      let symptoms = [];
+      let chatHistory = [];
+
+      function getSymptomsData(data) {
+        symptoms = data;
+      }
+      function getHistoryData(data) {
+        chatHistory = data;
+      }
+      getSymptomsData({{data | tojson }});
+      getHistoryData({{ history | tojson }});
+    </script>
+    <title>Medical Chatbot</title>
+  </head>
+
+  <body>
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
+    <div class="bg-blob bg-blob-3"></div>
+
+    <div class="container app">
+      <div class="row app-one">
+        <div class="conversation">
+          <div class="row heading">
+            <div class="heading-avatar">
+              <div class="heading-avatar-icon">
+                <i class="fas fa-stethoscope" aria-hidden="true"></i>
+              </div>
+              <span class="status-dot"></span>
+            </div>
+            <div class="heading-info">
+              <h3 class="heading-title">
+                Meddy <span class="heading-badge">Medical Assistant</span>
+              </h3>
+              <div class="heading-online">Online &bull; always here for you</div>
+            </div>
+            <div class="heading-actions">
+              <i
+                id="tts-toggle"
+                class="fas fa-volume-up"
+                title="Speak replies (on/off)"
+              ></i>
+              <i
+                id="dark-toggle"
+                class="fas fa-moon"
+                title="Toggle dark mode"
+              ></i>
+              <i
+                id="download-report"
+                class="fas fa-file-pdf"
+                title="Download report as PDF"
+              ></i>
+              <i
+                id="clear-history"
+                class="fas fa-trash"
+                title="Clear chat history"
+              ></i>
+            </div>
+          </div>
+
+          <div class="row message" id="conversation">
+            <div class="row message-previous">
+              <div class="col-sm-12 previous"></div>
+            </div>
+            <div class="row message-body">
+              <div class="col-sm-12 message-main-receiver">
+                <div class="receiver">
+                  <div class="message-text">
+                    Welcome! I'm Meddy, your medical chatbot. What symptoms are
+                    you currently experiencing? When you've entered all of your
+                    symptoms, please write '<b>Done</b>'. Make sure you enter as
+                    many symptoms as possible so the prediction can be as
+                    correct as possible.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-replies" id="quick-replies">
+            <span class="chip" data-symptoms='["fever", "cough", "sore throat"]'>Fever + Cough + Sore Throat</span>
+            <span class="chip" data-symptoms='["headache", "fatigue", "nausea"]'>Headache + Fatigue + Nausea</span>
+            <span class="chip" data-symptoms='["stomach pain", "vomiting", "nausea"]'>Stomach Pain + Vomiting + Nausea</span>
+            <span class="chip" data-symptoms='["continuous sneezing", "runny nose", "cough"]'>Sneezing + Runny Nose + Cough</span>
+            <span class="chip" data-symptoms='["itching", "skin rash"]'>Itching + Skin Rash</span>
+            <span class="chip" data-symptoms='["chest pain", "breathlessness"]'>Chest Pain + Breathlessness</span>
+            <span class="chip" data-symptoms='["joint pain", "muscle pain", "fatigue"]'>Joint Pain + Muscle Pain + Fatigue</span>
+          </div>
+
+          <div class="row reply">
+            <div
+              id="start-over"
+              class="reply-action reply-emojis text-center"
+              title="Start over"
+            >
+              <i class="fas fa-redo" aria-hidden="true"></i>
+            </div>
+            <div class="reply-main autocomplete">
+              <div class="symptoms-list-container">
+                <ul id="symptoms-list"></ul>
+              </div>
+              <input
+                id="message-text"
+                type="text"
+                placeholder="Type a symptom… or use the mic 🎤"
+                autocomplete="off"
+              />
+            </div>
+            <div
+              id="voice-input"
+              class="reply-action reply-recording text-center"
+              title="Voice typing - click to speak, click again to stop"
+            >
+              <i class="fas fa-microphone" aria-hidden="true"></i>
+            </div>
+            <div id="send" class="reply-action reply-send text-center">
+              <i class="fas fa-paper-plane" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
